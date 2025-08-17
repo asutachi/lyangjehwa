@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>량제화 · 고찰 아카이브</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="량제화의 고찰·에세이 아카이브. 주제별 정리, 검색과 태그 필터, 보기 전환 제공.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Reading progress bar (index에선 시각적 영향 없음) -->
+  <div class="progress" id="progress" role="presentation" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="site" aria-labelledby="title">
+      <div class="kicker">량제화 · 에세이 / 고찰</div>
+      <h1 class="title" id="title">Archive</h1>
+      <p class="subtitle">생각은 흩어지지 않게, 기록은 읽히게.</p>
+    </header>
+
+    <!-- 컨트롤 패널: 검색 / 태그 / 보기 전환 -->
+    <section class="card" style="padding:16px;">
+      <div class="controls">
+        <input id="search" type="search" placeholder="제목·키워드 검색" aria-label="검색">
+        <div id="tags" class="tags"></div>
+
+        <!-- 보기 전환 -->
+        <div class="view-toggle" role="tablist" aria-label="목록 보기 전환">
+          <button id="vCompact" class="vt-btn" role="tab" aria-selected="false" title="제목만">제목만</button>
+          <button id="vBox" class="vt-btn" role="tab" aria-selected="true" title="요약 박스">박스</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 글 목록: CSS 클래스(view-compact / view-box)로 모드 전환 -->
+    <section id="archive" class="grid view-box" aria-label="글 목록">
+      <!-- JS가 항목 주입 -->
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© <span id="y"></span> 량제화. 출처 표기 시 인용 가능.</p>
+    </div>
+  </footer>
+
+  <button class="backtop" aria-label="맨 위로" id="backtop">↑</button>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title id="doc-title">글 보기 · 량제화</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <meta id="desc" name="description" content="">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="progress" id="progress" role="presentation" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="site" aria-labelledby="post-title">
+      <div class="kicker"><a href="index.html" style="text-decoration:none;color:inherit">← 돌아가기</a></div>
+      <h1 class="title" id="post-title">제목 불러오는 중…</h1>
+      <p class="subtitle" id="post-sub">정보 불러오는 중…</p>
+    </header>
+
+    <div class="paper">
+      <nav class="card toc" aria-label="목차" id="toc">
+        <h2>목차</h2>
+        <ul id="toc-list"></ul>
+      </nav>
+
+      <main class="card" id="main" aria-label="본문">
+        <article id="post-body" class="prose" style="padding:28px">
+          <p>불러오는 중…</p>
+        </article>
+      </main>
+    </div>
+  </div>
+
+  <button class="backtop" aria-label="맨 위로" id="backtop">↑</button>
+  <script src="assets/site.js"></script>
+</body>
+</html>

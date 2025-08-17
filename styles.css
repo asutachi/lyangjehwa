@@ -1,0 +1,207 @@
+/* ===== Design Tokens ===== */
+:root{
+  --bg:#0d0f14;
+  --surface:#151923cc;
+  --ink:#e9e9ee;
+  --muted:#a7adbc;
+  --line:#2a2f3a;
+  --accent:#ff5a5f;
+  --accent-2:#ff9f43;
+  --radius:16px;
+  --shadow-lg:0 20px 60px rgba(0,0,0,.45);
+  --shadow-sm:0 8px 24px rgba(0,0,0,.25);
+  --maxw:1180px;
+  --toc-w:280px;
+  --gap:28px;
+  --focus:2px solid color-mix(in oklab, var(--accent), white 10%);
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#f6f7fb;
+    --bg-grad-1:rgba(255,110,110,.06);
+    --bg-grad-2:rgba(255,198,110,.06);
+    --surface:#ffffffcc;
+    --ink:#131722;
+    --muted:#5f6677;
+    --line:#e7e9f1;
+    --shadow-lg:0 24px 60px rgba(0,0,0,.10);
+    --shadow-sm:0 8px 24px rgba(0,0,0,.06);
+  }
+}
+
+/* ===== Base ===== */
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);
+  font:16px/1.8 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background:
+    radial-gradient(1200px 900px at -10% -20%, var(--bg-grad-1), transparent 60%),
+    radial-gradient(1200px 900px at 120% 0%, var(--bg-grad-2), transparent 60%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.wrap{width:94%;max-width:var(--maxw);margin:42px auto 80px}
+
+/* ===== Header ===== */
+.site{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:16px}
+.kicker{
+  display:inline-flex;align-items:center;gap:10px;padding:6px 12px;border:1px solid var(--line);
+  border-radius:999px;color:var(--muted);font-size:.86rem;backdrop-filter:blur(10px);
+  background: color-mix(in oklab, var(--surface), transparent 30%);
+}
+.kicker::before{content:"◆";color:var(--accent-2);font-size:.95rem}
+h1.title{margin:0;font-size:clamp(1.8rem, 2.2vw + 1.1rem, 2.8rem);line-height:1.2;letter-spacing:.2px}
+.subtitle{margin:0;color:var(--muted);font-weight:600}
+
+/* ===== Progress Bar ===== */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:50;
+  background:linear-gradient(90deg, var(--accent), var(--accent-2));transform-origin:0 50%;transform:scaleX(0)}
+
+/* ===== Cards & Shared ===== */
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);overflow:clip;backdrop-filter:blur(10px)
+}
+@supports not (overflow: clip){ .card{overflow:hidden} }
+@supports not (backdrop-filter: blur(10px)){
+  .kicker,.card{background: color-mix(in srgb, var(--surface), #000 6%)}
+}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+input[type="search"]{flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:12px}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{padding:6px 10px;border:1px solid var(--line);border-radius:999px;font-size:14px;cursor:pointer;background:transparent;color:var(--ink)}
+.tag.active{outline:2px solid var(--accent);border-color:transparent}
+
+/* ===== View toggle buttons ===== */
+.view-toggle { display:flex; gap:8px; margin-left:auto }
+.vt-btn{
+  padding:8px 12px; border:1px solid var(--line); background:transparent; color:var(--ink);
+  border-radius:10px; font-size:.9rem; cursor:pointer
+}
+.vt-btn[aria-selected="true"]{
+  border-color:var(--accent);
+  background: color-mix(in oklab, var(--surface), var(--accent) 12%);
+  color: var(--accent);
+}
+
+/* ===== List (index) ===== */
+/* 기본은 리스트. 모드는 #archive의 클래스(view-compact/view-box)로 결정 */
+.grid{
+  display:flex;
+  flex-direction:column;
+  gap:0; /* 줄 간격은 보더로 처리 */
+  margin:22px 0 60px;
+}
+
+/* a.card-link는 카드 스타일 초기화하고 리스트 룩 적용 */
+.card-link{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  padding:16px 6px;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  box-shadow:none;
+  background:transparent;
+  transition:background .12s ease;
+}
+.card-link:hover{
+  background: color-mix(in oklab, var(--surface), var(--accent) 6%);
+}
+.card-link:focus-visible{
+  outline:var(--focus);
+  outline-offset:2px;
+  border-radius:8px;
+}
+.card-link h3{
+  margin:0 0 6px;
+  font-size:1.05rem;
+  line-height:1.35;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.card-link .date{
+  font-size:.84rem;
+  color:var(--muted);
+  margin-right:10px;
+}
+.card-link p{
+  margin:6px 0 10px;
+  color: color-mix(in oklab, var(--ink), var(--muted) 18%);
+}
+.card-link .tags{ gap:6px; display:flex; flex-wrap:wrap }
+.card-link .tags .tag{
+  border-color: color-mix(in oklab, var(--line), #777 20%);
+  color: color-mix(in oklab, var(--ink), var(--muted) 25%);
+  padding:4px 10px; font-size:.8rem
+}
+
+/* ===== View modes ===== */
+/* 박스(요약 보이는) 모드 */
+#archive.view-box .card-link p{
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+
+/* 컴팩트(제목만) 모드 */
+#archive.view-compact .card-link { padding:12px 6px }
+#archive.view-compact .card-link p,
+#archive.view-compact .card-link .tags { display:none }
+#archive.view-compact .card-link h3 { font-size:1rem; margin:0 }
+#archive.view-compact .card-link .date { font-size:.8rem }
+
+/* 목록 상단 컨트롤 박스(검색/태그) 간격 */
+section.card .controls{ padding:2px 4px }
+
+/* ===== Post layout (단일 글 화면 유지) ===== */
+.paper{display:grid;grid-template-columns:1fr;gap:var(--gap);margin-top:22px}
+@media (min-width:1040px){ .paper{grid-template-columns:var(--toc-w) 1fr} }
+.toc{position:sticky;top:18px;align-self:start;max-height:calc(100dvh - 36px);overflow:auto;padding:18px}
+.toc h2{margin:0 0 12px;font-size:1rem;color:var(--muted);letter-spacing:.2px}
+.toc ul{list-style:none;margin:0;padding:0}
+.toc li{margin:8px 0}
+.toc a{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--ink);padding:10px 12px;border-radius:12px;border:1px dashed var(--line);transition:transform .12s ease,border-color .12s ease,background .12s ease}
+.toc a:hover{border-color:var(--accent);transform:translateX(3px);background: color-mix(in oklab, var(--surface), var(--accent) 6%);color:var(--accent)}
+.toc a[aria-current="true"]{border-color:var(--accent);background: color-mix(in oklab, var(--surface), var(--accent) 12%);color:var(--accent)}
+.toc::-webkit-scrollbar{width:10px}
+.toc::-webkit-scrollbar-thumb{background: color-mix(in oklab, var(--line), #888 20%);border-radius:999px}
+
+main{padding:28px}
+@media (min-width:720px){ main{padding:34px 40px 44px} }
+
+.prose h2.sec{margin:22px 0 12px;font-size:clamp(1.2rem,.8vw + 1rem,1.6rem);padding-bottom:10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
+.badge-num{display:inline-flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;border-radius:10px;background:linear-gradient(180deg, var(--accent), var(--accent-2));color:#fff;font-weight:800;font-size:.98rem;box-shadow:var(--shadow-sm)}
+p{margin:12px 0}
+.lead{font-size:1.05rem;color: color-mix(in oklab, var(--ink), var(--muted) 18%)}
+blockquote{margin:12px 0;padding:12px 14px;border-left:4px solid var(--accent);background: color-mix(in oklab, var(--surface), #000 8%);border-radius:10px;font-style:italic;color: color-mix(in oklab, var(--ink), var(--muted) 30%)}
+.note{margin:14px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background: color-mix(in oklab, var(--surface), #000 6%)}
+.end{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted)}
+
+:focus-visible{outline:var(--focus);outline-offset:2px}
+.backtop{position:fixed;right:18px;bottom:18px;z-index:60;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:10px 12px;border-radius:999px;cursor:pointer;box-shadow:var(--shadow-sm);backdrop-filter:blur(6px)}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .toc a{transition:none}
+}
+@media print{
+  body{background:#fff;color:#000}
+  .kicker,.toc,.backtop,.progress{display:none}
+  .card{box-shadow:none;border-color:#ddd}
+}
+/* === 섹션 배지(.badge-num)를 숫자로 === */
+/* 0부터 시작하고 싶으면 -1, 1부터면 0으로 두면 됨 */
+.prose{ counter-reset: sec -1; }        /* -1 → 첫 h2가 0번 */
+.prose h2.sec{ counter-increment: sec; }
+
+/* 기존 점을 가리고, 숫자를 가상요소로 가운데 찍기 */
+.prose h2.sec .badge-num{
+  position: relative;
+  color: transparent;                   /* 안에 들어있는 '•' 숨김 */
+}
+.prose h2.sec .badge-num::after{
+  content: counter(sec);
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; font-size: .98rem;
+}
